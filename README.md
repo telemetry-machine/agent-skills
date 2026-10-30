@@ -25,8 +25,8 @@ claude plugin install telemetry-machine --marketplace telemetry-machine/agent-sk
 ```
 
 Then start Claude Code in your application's folder, run `/mcp`, choose
-`telemetry-machine` and sign in. To send your first data, run
-`/mcp__telemetry-machine__onboarding`.
+`plugin:telemetry-machine:telemetry-machine` and sign in. To send your first data, run
+`/mcp__plugin_telemetry-machine_telemetry-machine__onboarding`.
 
 After that, ask for what you need. When the agent adds OpenTelemetry instrumentation
 or investigates an issue, the `tm-instrument` and `tm-investigate` skills load and send

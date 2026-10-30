@@ -20,9 +20,11 @@ skills.
    ```
 
 2. Sign in to Telemetry Machine in the browser when Claude asks. In Claude Code, run
-   `/mcp`, choose `telemetry-machine` and sign in. There is no key to copy.
-3. To send your first data, run `/mcp__telemetry-machine__onboarding` in Claude Code,
-   or ask Claude to call `get_onboarding_guide`.
+   `/mcp`, choose `plugin:telemetry-machine:telemetry-machine` and sign in. There is
+   no key to copy.
+3. To send your first data, run
+   `/mcp__plugin_telemetry-machine_telemetry-machine__onboarding` in Claude Code, or ask
+   Claude to call `get_onboarding_guide`.
 
 After that, ask for what you need. When Claude adds instrumentation or investigates an
 issue, the skills load and send it to Telemetry Machine.
