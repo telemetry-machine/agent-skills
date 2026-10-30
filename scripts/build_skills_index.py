@@ -84,8 +84,15 @@ def validate_relative_path(path: str) -> None:
         raise ValueError(f"unsafe skill path: {path}")
 
 
+def is_local_artifact(relative: Path) -> bool:
+    """A file git ignores here, such as .DS_Store or __pycache__/, which CI's checkout doesn't have."""
+    return any(part.startswith(".") or part == "__pycache__" for part in relative.parts)
+
+
 def list_skill_files(skill_dir: Path) -> list[str]:
-    files = [path for path in skill_dir.rglob("*") if path.is_file()]
+    files = [
+        path for path in skill_dir.rglob("*") if path.is_file() and not is_local_artifact(path.relative_to(skill_dir))
+    ]
     relative_paths = [path.relative_to(skill_dir).as_posix() for path in files]
     for path in relative_paths:
         validate_relative_path(path)

@@ -50,6 +50,19 @@ class BuildSkillsIndexTest(unittest.TestCase):
                 },
             )
 
+    def test_leaves_out_local_artifacts(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            skills_root = Path(temp_dir) / "skills"
+            skill = skills_root / "tm-cli"
+            (skill / "scripts" / "__pycache__").mkdir(parents=True)
+            (skill / "SKILL.md").write_text("---\nname: tm-cli\ndescription: Example.\n---\n# Skill\n")
+            (skill / ".DS_Store").write_text("")
+            (skill / "scripts" / "__pycache__" / "helper.cpython-312.pyc").write_text("")
+
+            index = build_skills_index.build_index(skills_root)
+
+            self.assertEqual(index["skills"][0]["files"], ["SKILL.md"])
+
     def test_rejects_skill_name_that_does_not_match_directory(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
