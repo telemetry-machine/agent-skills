@@ -19,9 +19,8 @@ skills.
    /plugin install telemetry-machine --marketplace telemetry-machine/agent-skills
    ```
 
-2. Sign in to Telemetry Machine in the browser when Claude asks. In Claude Code, run
-   `/mcp`, choose `plugin:telemetry-machine:telemetry-machine` and sign in. There is
-   no key to copy.
+2. In Claude Code, run `/mcp`, choose `plugin:telemetry-machine:telemetry-machine` and
+   sign in in your browser.
 3. To send your first data, run
    `/mcp__plugin_telemetry-machine_telemetry-machine__onboarding` in Claude Code, or ask
    Claude to call `get_onboarding_guide`.
