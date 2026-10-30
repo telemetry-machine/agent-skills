@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
+"""Write index.json next to the skills, for agents that download them instead of installing the plugin.
+
+telemetrymachine.com/docs/skills/ serves the skills directory from this repo's main branch, index.json
+included, so it's committed; CI runs this with --check to catch an index that wasn't updated.
+"""
 import argparse
 import json
 import re
-import shutil
 from pathlib import Path
 
 
 DEFAULT_SKILLS_ROOT = Path("telemetry-machine/skills")
-DEFAULT_OUTPUT_ROOT = Path("dist/skills")
 
 
 class SkillMetadataError(ValueError):
@@ -78,7 +81,7 @@ def validate_relative_path(path: str) -> None:
         or "\x00" in path
         or any(part in {"", ".", ".."} for part in parts)
     ):
-        raise ValueError(f"unsafe bundle path: {path}")
+        raise ValueError(f"unsafe skill path: {path}")
 
 
 def list_skill_files(skill_dir: Path) -> list[str]:
@@ -93,17 +96,13 @@ def list_skill_files(skill_dir: Path) -> list[str]:
     return sorted(relative_paths, key=lambda path: (path != "SKILL.md", path))
 
 
-def build_bundle(skills_root: Path, output_root: Path) -> dict[str, list[dict[str, object]]]:
+def build_index(skills_root: Path) -> dict[str, list[dict[str, object]]]:
     if not skills_root.is_dir():
         raise ValueError(f"skills root does not exist: {skills_root}")
 
     skill_dirs = sorted(path for path in skills_root.iterdir() if path.is_dir() and not path.name.startswith("."))
     if not skill_dirs:
         raise ValueError(f"no skills found in {skills_root}")
-
-    if output_root.exists():
-        shutil.rmtree(output_root)
-    output_root.mkdir(parents=True)
 
     index = {"skills": []}
     for skill_dir in skill_dirs:
@@ -113,33 +112,35 @@ def build_bundle(skills_root: Path, output_root: Path) -> dict[str, list[dict[st
         if name != skill_dir.name:
             raise ValueError(f"skill name {name!r} does not match directory {skill_dir.name!r}")
 
-        files = list_skill_files(skill_dir)
-        output_skill_dir = output_root / name
-        for relative_path in files:
-            source = skill_dir / relative_path
-            destination = output_skill_dir / relative_path
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(source, destination)
-
         index["skills"].append(
             {
                 "name": name,
                 "description": metadata["description"],
-                "files": files,
+                "files": list_skill_files(skill_dir),
             }
         )
 
-    (output_root / "index.json").write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
     return index
 
 
+def render_index(index: dict[str, list[dict[str, object]]]) -> str:
+    return json.dumps(index, indent=2) + "\n"
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build the public Telemetry Machine skill bundle")
+    parser = argparse.ArgumentParser(description="Write the Telemetry Machine skills index")
     parser.add_argument("--skills-root", type=Path, default=DEFAULT_SKILLS_ROOT)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_ROOT)
+    parser.add_argument("--check", action="store_true", help="fail if index.json is out of date instead of writing it")
     args = parser.parse_args()
 
-    build_bundle(args.skills_root, args.output)
+    index_path = args.skills_root / "index.json"
+    rendered = render_index(build_index(args.skills_root))
+    if args.check:
+        if not index_path.is_file() or index_path.read_text(encoding="utf-8") != rendered:
+            raise SystemExit(f"{index_path} is out of date; run python3 scripts/build_skills_index.py")
+        return
+
+    index_path.write_text(rendered, encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -1,18 +1,16 @@
 import json
-import stat
 import tempfile
 import unittest
 from pathlib import Path
 
-import build_skills_bundle
+import build_skills_index
 
 
-class BuildSkillsBundleTest(unittest.TestCase):
-    def test_builds_index_and_copies_skill_files(self):
+class BuildSkillsIndexTest(unittest.TestCase):
+    def test_indexes_each_skill_and_its_files(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             skills_root = root / "skills"
-            output_root = root / "dist"
             skill = skills_root / "otel-instrumentation"
             references = skill / "references"
             scripts = skill / "scripts"
@@ -29,13 +27,9 @@ class BuildSkillsBundleTest(unittest.TestCase):
                 "# Skill\n"
             )
             (references / "verification-checklist.md").write_text("# Verify\n")
-            script = scripts / "start-collector.sh"
-            script.write_text("#!/usr/bin/env bash\n")
-            script.chmod(script.stat().st_mode | stat.S_IXUSR)
+            (scripts / "start-collector.sh").write_text("#!/usr/bin/env bash\n")
 
-            build_skills_bundle.build_bundle(skills_root, output_root)
-
-            index_text = (output_root / "index.json").read_text()
+            index_text = build_skills_index.render_index(build_skills_index.build_index(skills_root))
             self.assertIn("\\u2014", index_text)
             self.assertNotIn("—", index_text)
             index = json.loads(index_text)
@@ -55,12 +49,6 @@ class BuildSkillsBundleTest(unittest.TestCase):
                     ]
                 },
             )
-            self.assertEqual(
-                (output_root / "otel-instrumentation/references/verification-checklist.md").read_text(),
-                "# Verify\n",
-            )
-            mode = (output_root / "otel-instrumentation/scripts/start-collector.sh").stat().st_mode
-            self.assertTrue(mode & stat.S_IXUSR)
 
     def test_rejects_skill_name_that_does_not_match_directory(self):
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -72,7 +60,7 @@ class BuildSkillsBundleTest(unittest.TestCase):
             )
 
             with self.assertRaisesRegex(ValueError, "does not match directory"):
-                build_skills_bundle.build_bundle(root / "skills", root / "dist")
+                build_skills_index.build_index(root / "skills")
 
 
 if __name__ == "__main__":

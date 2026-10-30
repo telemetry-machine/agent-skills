@@ -15,8 +15,7 @@ telemetry-machine/            # Plugin root
   .cursor-plugin/             # Cursor plugin manifest
   skills/                     # One directory per skill: SKILL.md + references/ + scripts/
 scripts/
-  build_skills_bundle.py      # dist/skills: index.json for agents that download skills
-  build_claude_marketplace.py # dist/claude-plugin: hosted marketplace.json + plugin zip
+  build_skills_index.py       # skills/index.json, for agents that download skills; CI checks it
 server.json                   # MCP Registry entry for the MCP server (README: MCP Registry)
 ```
 
@@ -35,6 +34,7 @@ server.json                   # MCP Registry entry for the MCP server (README: M
    ```
 
 2. Add reference files in `telemetry-machine/skills/<skill-name>/references/`
+3. Run `python3 scripts/build_skills_index.py` to update `telemetry-machine/skills/index.json`
 
 ## Observability
 

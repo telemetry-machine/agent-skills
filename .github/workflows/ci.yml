@@ -22,14 +22,5 @@ jobs:
       - name: Run tests
         run: python3 -m unittest discover -s scripts -p 'test_*.py'
 
-      - name: Build skill bundle
-        run: python3 scripts/build_skills_bundle.py
-
-      - name: Validate generated skill index
-        run: python3 -m json.tool dist/skills/index.json >/dev/null
-
-      - name: Build Claude Code marketplace
-        run: python3 scripts/build_claude_marketplace.py
-
-      - name: Validate generated marketplace
-        run: python3 -m json.tool dist/claude-plugin/marketplace.json >/dev/null
+      - name: Check the skills index is up to date
+        run: python3 scripts/build_skills_index.py --check
