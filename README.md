@@ -1,9 +1,56 @@
-# Telemetry Machine agent skills
+# Telemetry Machine: OpenTelemetry-native observability for engineers and agents
 
-Skills that let coding agents set up, query and investigate Telemetry Machine. The
-Claude Code plugin also adds Telemetry Machine's MCP server
-(`https://telemetrymachine.com/api/mcp`) as `telemetry-machine`. Agents sign in to it
-with OAuth in the browser; there is no key to copy.
+[Telemetry Machine](https://telemetrymachine.com) stores a team's OpenTelemetry traces,
+logs and metrics, and arbitrary wide events, and answers any question about them. This
+repo is its plugin for coding agents. The plugin connects the agent to Telemetry
+Machine's MCP server (`https://telemetrymachine.com/api/mcp`) and adds three skills,
+so the agent can instrument your code, send its telemetry to Telemetry Machine, query
+it and root-cause issues. Agents sign in with OAuth in the browser; there is no key to
+copy.
+
+## Install
+
+### Claude Code
+
+In Claude Code, run:
+
+```text
+/plugin marketplace add telemetry-machine/agent-skills
+/plugin install telemetry-machine@telemetry-machine-plugins
+```
+
+Or, from a terminal:
+
+```bash
+claude plugin marketplace add telemetry-machine/agent-skills
+claude plugin install telemetry-machine@telemetry-machine-plugins
+```
+
+To install the latest release from telemetrymachine.com instead (Claude Code 2.1.292
+or later):
+
+```text
+/plugin install telemetry-machine --marketplace https://telemetrymachine.com/docs/skills/marketplace.json
+```
+
+Then start Claude Code in your application's folder, run `/mcp`, choose
+`telemetry-machine` and sign in. To send your first data, run
+`/mcp__telemetry-machine__onboarding`.
+
+After that, ask for what you need. When the agent adds OpenTelemetry instrumentation
+or investigates an issue, the `tm-instrument` and `tm-investigate` skills load and send
+it to Telemetry Machine.
+
+### Other agents
+
+Add `https://telemetrymachine.com/api/mcp` as a remote (Streamable HTTP) MCP server and
+sign in when the agent asks. To onboard, ask the agent to call `get_onboarding_guide`
+and follow it. To onboard another system once you're sending data, ask it to call
+`get_instrumentation_guide`. Telemetry Machine's onboarding page shows the exact steps
+for Codex, Cursor and others. The skills are also at
+`https://telemetrymachine.com/docs/skills/index.json`.
+
+## Skills
 
 | Skill | Use |
 |---|---|
@@ -15,38 +62,16 @@ The skills are short on purpose. Agents already know OpenTelemetry and SQL; the 
 hold only what they can't know about Telemetry Machine. The MCP server's tools,
 errors and onboarding guide carry the rest.
 
-## Install
+## Links
 
-### Claude Code
-
-Run in a terminal (Claude Code 2.1.292 or later):
-
-```bash
-claude plugin install telemetry-machine --marketplace https://telemetrymachine.com/docs/skills/marketplace.json
-```
-
-Then start Claude Code in your application's folder, run `/mcp`, choose
-`telemetry-machine` and sign in. Then run `/mcp__telemetry-machine__onboarding`.
-
-After that, ask for what you need. When the agent adds OpenTelemetry instrumentation
-or investigates an issue, the `tm-instrument` and `tm-investigate` skills load and send
-it to Telemetry Machine.
-
-For a site other than telemetrymachine.com, also add that site's server under its own
-name, and use that name instead:
-
-```bash
-claude mcp add --scope user --transport http tm-local https://tm-local.test/api/mcp
-```
-
-### Other agents
-
-Add `https://telemetrymachine.com/api/mcp` as a remote (Streamable HTTP) MCP server and
-sign in when the agent asks. To onboard, ask the agent to call `get_onboarding_guide`
-and follow it. To onboard another system once you're sending data, ask it to call
-`get_instrumentation_guide`. Telemetry Machine's onboarding page shows the exact steps
-for Codex, Cursor and others. The skills are also at
-`https://telemetrymachine.com/docs/skills/index.json`.
+- [Telemetry Machine](https://telemetrymachine.com)
+- [Documentation](https://telemetrymachine.com/docs), and its
+  [index for agents](https://telemetrymachine.com/docs/llms.txt)
+- MCP server: `https://telemetrymachine.com/api/mcp`, listed in the
+  [MCP Registry](https://registry.modelcontextprotocol.io) as
+  `com.telemetrymachine/telemetry-machine`
+- [What the plugin connects to](telemetry-machine/README.md#what-the-plugin-connects-to)
+- [Privacy policy](https://telemetrymachine.com/privacy)
 
 ## Development
 
@@ -65,21 +90,26 @@ python3 -m unittest discover -s scripts -p 'test_*.py'
 
 Check the plugin with `claude plugin validate --strict .`.
 
+To try the plugin against another Telemetry Machine site, add that site's MCP server
+under its own name, and use that name instead of `telemetry-machine`:
+
+```bash
+claude mcp add --scope user --transport http <name> https://<site>/api/mcp
+```
+
 ### MCP Registry
 
 `server.json` lists the MCP server in the official MCP Registry
 (`registry.modelcontextprotocol.io`) as `com.telemetrymachine/telemetry-machine`.
 Releases don't publish it. To publish a change, raise `version` (the registry refuses
-a version it already has), then, from the repo root on Monster:
+a version it already has), then, from the repo root:
 
 ```bash
 mcp-publisher validate
-mcp-publisher login dns --domain telemetrymachine.com \
-  --private-key "$(pass show telemetry-machine/mcp-registry-dns-key | head -1)"
+mcp-publisher login dns --domain telemetrymachine.com --private-key <key>
 mcp-publisher publish
 mcp-publisher logout
 ```
 
-The login signs with the Ed25519 key in `pass`; the registry checks it against the
-`v=MCPv1` TXT record at the apex of `telemetrymachine.com` (in the `infrastructure`
-repo's Cloudflare zone).
+`<key>` is the Ed25519 private key whose public half is in the `v=MCPv1` TXT record at
+the apex of `telemetrymachine.com`.
