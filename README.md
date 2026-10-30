@@ -32,13 +32,26 @@ After that, ask for what you need. When the agent adds OpenTelemetry instrumenta
 or investigates an issue, the `tm-instrument` and `tm-investigate` skills load and send
 it to Telemetry Machine.
 
+### Codex
+
+```bash
+codex plugin marketplace add telemetry-machine/agent-skills
+codex plugin add telemetry-machine@telemetry-machine-plugins
+codex mcp login telemetry-machine
+```
+
+To send your first data, ask Codex to call `get_onboarding_guide` and follow it.
+
+### Cursor
+
+See [Installing the plugin in Cursor](telemetry-machine/.cursor-plugin/INSTALL.md).
+
 ### Other agents
 
 Add `https://telemetrymachine.com/api/mcp` as a remote (Streamable HTTP) MCP server and
 sign in when the agent asks. To onboard, ask the agent to call `get_onboarding_guide`
 and follow it. To onboard another system once you're sending data, ask it to call
-`get_instrumentation_guide`. Telemetry Machine's onboarding page shows the exact steps
-for Codex, Cursor and others. The skills are also at
+`get_instrumentation_guide`. The skills are also at
 `https://telemetrymachine.com/docs/skills/index.json`.
 
 ## Skills
