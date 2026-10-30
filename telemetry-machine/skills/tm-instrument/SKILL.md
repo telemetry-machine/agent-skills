@@ -5,7 +5,7 @@ description: >
   metrics, wide events), including SDK setup and Collector config, and when a
   Telemetry Machine guide has you send a system's data.
 metadata:
-  version: "0.1.3" # x-release-please-version
+  version: "0.1.4" # x-release-please-version
 ---
 
 # Instrument with OpenTelemetry

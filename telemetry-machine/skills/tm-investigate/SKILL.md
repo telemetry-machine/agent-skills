@@ -3,7 +3,7 @@ name: tm-investigate
 description: >
   Load this whenever you investigate or root-cause an issue.
 metadata:
-  version: "0.1.3" # x-release-please-version
+  version: "0.1.4" # x-release-please-version
 ---
 
 # Investigate with Telemetry Machine

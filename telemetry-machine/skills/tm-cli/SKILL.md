@@ -3,7 +3,7 @@ name: tm-cli
 description: >
   Use if and only if you use tm-cli (the Telemetry Machine CLI).
 metadata:
-  version: "0.1.3" # x-release-please-version
+  version: "0.1.4" # x-release-please-version
 ---
 
 # tm-cli
