@@ -13,6 +13,7 @@ telemetry-machine/            # Plugin root
   .claude-plugin/icon.png     # Listing icon in Anthropic's plugin directory
   .codex-plugin/              # Codex plugin manifest
   .cursor-plugin/             # Cursor plugin manifest
+  .mcp.json                   # MCP server for Codex; Claude Code and Cursor also declare it in their manifests
   skills/                     # One directory per skill: SKILL.md + references/ + scripts/
 scripts/
   build_skills_bundle.py      # dist/skills: index.json for agents that download skills
