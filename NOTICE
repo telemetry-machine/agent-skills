@@ -1,0 +1,6 @@
+Telemetry Machine agent skills
+Copyright (c) 2026 Telemetry Machine
+
+Portions of this repository are adapted from Honeycomb's agent-skill
+repository (https://github.com/honeycombio/agent-skill),
+Copyright (c) 2025 Honeycomb.io, under the MIT License. See LICENSE.
