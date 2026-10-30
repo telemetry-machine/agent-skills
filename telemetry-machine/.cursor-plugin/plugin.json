@@ -7,10 +7,10 @@
     "name": "Telemetry Machine"
   },
   "publisher": "Telemetry Machine",
-  "homepage": "https://docs.telemetrymachine.com/integrations/mcp/",
+  "homepage": "https://telemetrymachine.com/docs/quick-start",
   "repository": "https://github.com/telemetry-machine/agent-skills",
   "license": "MIT",
-  "logo": "assets/logo-square.png",
+  "logo": ".claude-plugin/icon.png",
   "keywords": [
     "telemetry-machine",
     "observability",
@@ -29,8 +29,9 @@
     "debugging"
   ],
   "skills": "./skills/",
-  "agents": "./agents/",
-  "commands": "./commands/",
-  "hooks": "./hooks/cursor-hooks.json",
-  "mcpServers": "./mcp.json"
+  "mcpServers": {
+    "telemetry-machine": {
+      "url": "https://telemetrymachine.com/api/mcp"
+    }
+  }
 }

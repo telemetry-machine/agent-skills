@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "telemetry-machine": {
+      "type": "http",
+      "url": "https://telemetrymachine.com/api/mcp"
+    }
+  }
+}

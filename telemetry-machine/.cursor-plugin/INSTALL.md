@@ -1,26 +1,16 @@
 # Installing the Telemetry Machine plugin in Cursor
 
-Telemetry Machine ships as a Cursor **plugin** — skills, agents, the `/telemetry-machine-setup`
-command, hooks, and the Telemetry Machine MCP server, all declared in
-[`plugin.json`](./plugin.json).
-
-## Recommended — Cursor plugin directory
-
-Install from the public listing:
-**[cursor.directory/plugins/telemetry-machine](https://cursor.directory/plugins/telemetry-machine)**
-
-Open the listing and use its **Install** action. Cursor shows the plugin's MCP
-server config for review before passing it to Cursor — confirm it, then restart
-Cursor or run **Developer: Reload Window** from the command palette.
+The plugin adds Telemetry Machine's MCP server (`https://telemetrymachine.com/api/mcp`)
+and its skills to Cursor, as declared in [`plugin.json`](./plugin.json).
 
 ## Teams / Enterprise — Marketplace import
 
-GitHub import is available on Teams and Enterprise plans via Team Marketplaces:
+Team admins can add this repo as a marketplace:
 
-1. Open the Cursor dashboard → **Settings > Plugins**.
-2. Under **Team Marketplaces**, import from the repository URL:
-   `https://github.com/telemetry-machine/agent-skills`
-3. Add the `telemetry-machine` plugin to your marketplace and grant team access.
+1. In the Cursor dashboard, open **Plugins & MCPs**, click **Add Marketplace** and
+   choose **Import from Repo**.
+2. Import `https://github.com/telemetry-machine/agent-skills`.
+3. Team members then find `telemetry-machine` under **Customize** and select **Install**.
 
 ## Manual / local install (development)
 
@@ -73,12 +63,12 @@ re-copy `telemetry-machine/` into `~/.cursor/plugins/local/`.)
 rm ~/.cursor/plugins/local/telemetry-machine   # removes the symlink, not your clone
 ```
 
-## MCP server
+## Sign in
 
-The plugin declares the Telemetry Machine MCP server (`mcp.json`). You can also configure
-it independently — see
-[Telemetry Machine Docs: MCP Configuration](https://docs.telemetrymachine.com/integrations/mcp/configuration-guide/).
-The `/telemetry-machine-setup` command walks through configuration interactively.
+Open **Cursor Settings → MCP**, find `telemetry-machine` and sign in to Telemetry
+Machine in the browser. There is no key to copy. To send your first data, ask the agent
+to call `get_onboarding_guide` and follow it.
 
-See [Cursor: Plugins](https://cursor.com/docs/plugins) for the underlying plugin
-system.
+To add the MCP server without the plugin, see Telemetry Machine's
+[quick start](https://telemetrymachine.com/docs/quick-start). See
+[Cursor: Plugins](https://cursor.com/docs/plugins) for the underlying plugin system.

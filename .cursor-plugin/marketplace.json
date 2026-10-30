@@ -10,7 +10,7 @@
     {
       "name": "telemetry-machine",
       "source": "telemetry-machine",
-      "description": "Skills, agents, and workflows for Telemetry Machine observability"
+      "description": "Telemetry Machine's MCP server, with skills to instrument code with OpenTelemetry, query its telemetry and root-cause issues"
     }
   ]
 }
