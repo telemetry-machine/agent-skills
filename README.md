@@ -12,25 +12,16 @@ copy.
 
 ### Claude Code
 
-In Claude Code, run:
+In Claude Code (2.1.292 or later), run:
 
 ```text
-/plugin marketplace add telemetry-machine/agent-skills
-/plugin install telemetry-machine@telemetry-machine-plugins
+/plugin install telemetry-machine --marketplace telemetry-machine/agent-skills
 ```
 
 Or, from a terminal:
 
 ```bash
-claude plugin marketplace add telemetry-machine/agent-skills
-claude plugin install telemetry-machine@telemetry-machine-plugins
-```
-
-To install the latest release from telemetrymachine.com instead (Claude Code 2.1.292
-or later):
-
-```text
-/plugin install telemetry-machine --marketplace https://telemetrymachine.com/docs/skills/marketplace.json
+claude plugin install telemetry-machine --marketplace telemetry-machine/agent-skills
 ```
 
 Then start Claude Code in your application's folder, run `/mcp`, choose
