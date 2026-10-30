@@ -79,12 +79,15 @@ errors and onboarding guide carry the rest.
 
 ## Development
 
-The plugin is in `telemetry-machine/`. Each release publishes two things to
-`https://telemetrymachine.com/docs/skills/`:
+The plugin is in `telemetry-machine/`. Merging to `main` publishes it: Claude Code,
+Codex and Cursor install it from this repo, and `https://telemetrymachine.com/docs/skills/`
+serves `telemetry-machine/skills/` from `main` to agents that download skills. Release
+Please bumps the version in the manifests and skills, which is what makes installed
+plugins update.
 
-- `index.json` and the skill files, from `scripts/build_skills_bundle.py`;
-- `marketplace.json` and a pinned plugin zip under `releases/<version>/`, from
-  `scripts/build_claude_marketplace.py`.
+When you add or remove a skill or one of its files, or change a skill's description,
+update `telemetry-machine/skills/index.json` with
+`python3 scripts/build_skills_index.py`. CI checks it.
 
 Run the tests with:
 

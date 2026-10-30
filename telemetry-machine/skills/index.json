@@ -1,0 +1,26 @@
+{
+  "skills": [
+    {
+      "name": "tm-cli",
+      "description": "Use if and only if you use tm-cli (the Telemetry Machine CLI).",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "tm-instrument",
+      "description": "Load this whenever you add or change OpenTelemetry instrumentation (logs, traces, metrics, wide events), including SDK setup and Collector config, and when a Telemetry Machine guide has you send a system's data.",
+      "files": [
+        "SKILL.md",
+        "references/send-opentelemetry.md"
+      ]
+    },
+    {
+      "name": "tm-investigate",
+      "description": "Load this whenever you investigate or root-cause an issue.",
+      "files": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}
