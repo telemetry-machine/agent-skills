@@ -1,0 +1,44 @@
+{
+  "name": "telemetry-machine",
+  "version": "0.1.3",
+  "description": "Telemetry Machine for coding agents: the MCP server and tm-cli.",
+  "author": {
+    "name": "Telemetry Machine",
+    "url": "https://telemetrymachine.com"
+  },
+  "homepage": "https://docs.telemetrymachine.com/integrations/mcp/",
+  "repository": "https://github.com/telemetry-machine/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "telemetry-machine",
+    "observability",
+    "opentelemetry",
+    "tracing",
+    "mcp",
+    "debugging",
+    "instrumentation"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Telemetry Machine",
+    "shortDescription": "Telemetry Machine observability workflows",
+    "longDescription": "Connects your agent to Telemetry Machine through its MCP server, with tm-cli for terminals and CI.",
+    "developerName": "Telemetry Machine",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://telemetrymachine.com",
+    "brandColor": "#FEC514",
+    "composerIcon": "./assets/logo-square.png",
+    "logo": "./assets/logo-square.png",
+    "defaultPrompt": [
+      "Use Telemetry Machine to investigate a production latency spike.",
+      "Use Telemetry Machine to plan OpenTelemetry instrumentation for this service.",
+      "Use Telemetry Machine to explain what changed in a latency regression."
+    ]
+  }
+}

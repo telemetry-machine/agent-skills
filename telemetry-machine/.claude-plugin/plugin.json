@@ -1,0 +1,27 @@
+{
+  "name": "telemetry-machine",
+  "version": "0.1.3",
+  "description": "Telemetry Machine for coding agents: the MCP server and tm-cli.",
+  "author": {
+    "name": "Telemetry Machine",
+    "url": "https://telemetrymachine.com"
+  },
+  "homepage": "https://telemetrymachine.com/docs/quick-start",
+  "privacyPolicyUrl": "https://telemetrymachine.com/privacy",
+  "license": "MIT",
+  "keywords": [
+    "telemetry-machine",
+    "observability",
+    "opentelemetry",
+    "tracing",
+    "mcp",
+    "debugging",
+    "instrumentation"
+  ],
+  "mcpServers": {
+    "telemetry-machine": {
+      "type": "http",
+      "url": "https://telemetrymachine.com/api/mcp"
+    }
+  }
+}

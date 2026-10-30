@@ -1,0 +1,20 @@
+{
+  "name": "telemetry-machine-plugins",
+  "interface": {
+    "displayName": "Telemetry Machine Plugins"
+  },
+  "plugins": [
+    {
+      "name": "telemetry-machine",
+      "source": {
+        "source": "local",
+        "path": "./telemetry-machine"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "telemetry-machine",
+  "displayName": "Telemetry Machine",
+  "version": "0.1.3",
+  "description": "Telemetry Machine for coding agents: the MCP server and tm-cli.",
+  "author": {
+    "name": "Telemetry Machine"
+  },
+  "publisher": "Telemetry Machine",
+  "homepage": "https://docs.telemetrymachine.com/integrations/mcp/",
+  "repository": "https://github.com/telemetry-machine/agent-skills",
+  "license": "MIT",
+  "logo": "assets/logo-square.png",
+  "keywords": [
+    "telemetry-machine",
+    "observability",
+    "opentelemetry",
+    "tracing",
+    "mcp",
+    "debugging",
+    "instrumentation"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "observability",
+    "monitoring",
+    "tracing",
+    "opentelemetry",
+    "debugging"
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "commands": "./commands/",
+  "hooks": "./hooks/cursor-hooks.json",
+  "mcpServers": "./mcp.json"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "telemetry-machine-plugins",
+  "owner": {
+    "name": "Telemetry Machine"
+  },
+  "metadata": {
+    "description": "Telemetry Machine observability plugins for Cursor"
+  },
+  "plugins": [
+    {
+      "name": "telemetry-machine",
+      "source": "telemetry-machine",
+      "description": "Skills, agents, and workflows for Telemetry Machine observability"
+    }
+  ]
+}

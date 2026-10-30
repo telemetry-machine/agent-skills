@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.telemetrymachine/telemetry-machine",
+  "title": "Telemetry Machine",
+  "description": "Query Telemetry Machine observability data and instrument your apps with OpenTelemetry.",
+  "version": "1.0.0",
+  "websiteUrl": "https://telemetrymachine.com/",
+  "icons": [
+    {
+      "src": "https://telemetrymachine.com/favicon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": ["any"]
+    },
+    {
+      "src": "https://telemetrymachine.com/apple-touch-icon.png",
+      "mimeType": "image/png",
+      "sizes": ["180x180"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://telemetrymachine.com/api/mcp"
+    }
+  ]
+}

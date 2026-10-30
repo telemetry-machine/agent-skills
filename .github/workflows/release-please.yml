@@ -1,0 +1,112 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-24.04
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Release Please
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish-skills:
+    name: Publish skill bundle
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+
+    env:
+      R2_BUCKET: ${{ vars.R2_BUCKET }}
+      R2_ENDPOINT: ${{ vars.R2_ENDPOINT }}
+      R2_PREFIX: docs/skills
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build skill bundle
+        run: python3 scripts/build_skills_bundle.py
+
+      - name: Build Claude Code marketplace
+        run: python3 scripts/build_claude_marketplace.py
+
+      - name: Upload skill bundle to R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          RELEASE_VERSION: ${{ needs.release-please.outputs.version }}
+        run: |
+          set -euo pipefail
+          aws --version
+
+          if [[ -z "$RELEASE_VERSION" ]]; then
+            echo "Release Please did not provide a version" >&2
+            exit 1
+          fi
+
+          version_prefix="${R2_PREFIX}/releases/${RELEASE_VERSION}"
+
+          aws s3 sync dist/skills "s3://${R2_BUCKET}/${version_prefix}/" \
+            --endpoint-url "$R2_ENDPOINT" \
+            --exclude "index.json" \
+            --cache-control "public, max-age=31536000, immutable"
+
+          aws s3 cp dist/skills/index.json "s3://${R2_BUCKET}/${version_prefix}/index.json" \
+            --endpoint-url "$R2_ENDPOINT" \
+            --cache-control "public, max-age=31536000, immutable" \
+            --content-type "application/json"
+
+          aws s3 sync dist/skills "s3://${R2_BUCKET}/${R2_PREFIX}/" \
+            --endpoint-url "$R2_ENDPOINT" \
+            --exclude "index.json" \
+            --exclude "releases/*" \
+            --cache-control "public, max-age=60"
+
+          aws s3 cp dist/skills/index.json "s3://${R2_BUCKET}/${R2_PREFIX}/index.json" \
+            --endpoint-url "$R2_ENDPOINT" \
+            --cache-control "public, max-age=60" \
+            --content-type "application/json"
+
+          # The plugin zip is immutable; marketplace.json at the prefix root always names the latest one.
+          plugin_zip="dist/claude-plugin/telemetry-machine-${RELEASE_VERSION}.zip"
+          if [[ ! -f "$plugin_zip" ]]; then
+            echo "Missing $plugin_zip; plugin.json and the release version disagree" >&2
+            exit 1
+          fi
+
+          aws s3 cp "$plugin_zip" "s3://${R2_BUCKET}/${version_prefix}/$(basename "$plugin_zip")" \
+            --endpoint-url "$R2_ENDPOINT" \
+            --cache-control "public, max-age=31536000, immutable" \
+            --content-type "application/zip"
+
+          aws s3 cp dist/claude-plugin/marketplace.json "s3://${R2_BUCKET}/${version_prefix}/marketplace.json" \
+            --endpoint-url "$R2_ENDPOINT" \
+            --cache-control "public, max-age=31536000, immutable" \
+            --content-type "application/json"
+
+          aws s3 cp dist/claude-plugin/marketplace.json "s3://${R2_BUCKET}/${R2_PREFIX}/marketplace.json" \
+            --endpoint-url "$R2_ENDPOINT" \
+            --cache-control "public, max-age=60" \
+            --content-type "application/json"
