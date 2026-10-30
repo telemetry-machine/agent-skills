@@ -13,10 +13,10 @@ skills.
 
 ## Get started
 
-1. Install the plugin. In Claude Code, run:
+1. Install the plugin. In Claude Code (2.1.292 or later), run:
 
    ```text
-   /plugin install telemetry-machine --marketplace https://telemetrymachine.com/docs/skills/marketplace.json
+   /plugin install telemetry-machine --marketplace telemetry-machine/agent-skills
    ```
 
 2. Sign in to Telemetry Machine in the browser when Claude asks. In Claude Code, run
