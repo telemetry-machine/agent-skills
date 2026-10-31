@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "telemetry-machine-plugins",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Telemetry Machine plugin for Claude Code",
   "owner": {
     "name": "Telemetry Machine",
@@ -12,7 +12,7 @@
       "name": "telemetry-machine",
       "source": "./telemetry-machine",
       "description": "Telemetry Machine's MCP server and tm-cli",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "author": {
         "name": "Telemetry Machine"
       }

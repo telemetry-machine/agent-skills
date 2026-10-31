@@ -1,6 +1,6 @@
 {
   "name": "telemetry-machine",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Telemetry Machine for coding agents: the MCP server and tm-cli.",
   "author": {
     "name": "Telemetry Machine",
