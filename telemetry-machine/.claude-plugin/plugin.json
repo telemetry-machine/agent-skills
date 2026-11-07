@@ -2,13 +2,17 @@
   "name": "telemetry-machine",
   "displayName": "Telemetry Machine",
   "version": "0.1.5",
-  "description": "Telemetry Machine for coding agents: the MCP server and tm-cli.",
+  "description": "Observability that answers any question about your stack. Claude queries your traces, logs and metrics, investigates incidents, and instruments your code.",
   "author": {
     "name": "Telemetry Machine",
     "url": "https://telemetrymachine.com"
   },
   "homepage": "https://telemetrymachine.com/docs/quick-start",
+  "repository": "https://github.com/telemetry-machine/agent-skills",
+  "documentationUrl": "https://telemetrymachine.com/docs",
+  "supportUrl": "https://github.com/telemetry-machine/agent-skills/issues",
   "privacyPolicyUrl": "https://telemetrymachine.com/privacy",
+  "termsOfServiceUrl": "https://telemetrymachine.com/terms",
   "license": "MIT",
   "keywords": [
     "telemetry-machine",
