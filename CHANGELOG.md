@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/telemetry-machine/agent-skills/compare/v0.1.5...v0.1.6) (2026-11-07)
+
+
+### Bug Fixes
+
+* **plugin:** say what the plugin does in its listing ([#10](https://github.com/telemetry-machine/agent-skills/issues/10)) ([ef18025](https://github.com/telemetry-machine/agent-skills/commit/ef18025560281ba3e0b2a3c1be27eb25440125f1))
+
 ## [0.1.5](https://github.com/telemetry-machine/agent-skills/compare/v0.1.4...v0.1.5) (2026-10-31)
 
 
