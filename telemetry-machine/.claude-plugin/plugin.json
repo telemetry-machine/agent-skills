@@ -1,7 +1,7 @@
 {
   "name": "telemetry-machine",
   "displayName": "Telemetry Machine",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Observability that answers any question about your stack. Claude queries your traces, logs and metrics, investigates incidents, and instruments your code.",
   "author": {
     "name": "Telemetry Machine",
